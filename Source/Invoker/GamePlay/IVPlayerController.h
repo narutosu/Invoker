@@ -14,9 +14,13 @@ UCLASS()
 class INVOKER_API AIVPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
+	// To add mapping context
+	virtual void BeginPlay();
+	
 	//Input
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	class UNiagaraSystem* FXCursor;
 	virtual void SetupInputComponent() override;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="EnhancedInput", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<UInputMappingContext> InputMappingContext;
@@ -43,7 +47,7 @@ protected:
 	void OnInputCancel(const FInputActionValue& value);
 	void OnInputHeroSelect(const FInputActionValue& value);
 	void OnInputLeftClick(const FInputActionValue& value);
-	void OnInputMove(const FInputActionValue& value);
+	void OnInputMove();
 	void OnInputSkill(const FInputActionValue& value);
 	void OnInputStop(const FInputActionValue& value);
 };

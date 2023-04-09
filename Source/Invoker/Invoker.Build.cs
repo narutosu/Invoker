@@ -14,7 +14,10 @@ public class Invoker : ModuleRules
 			"SlateCore",
 			"GameplayAbilities",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks",
+			"Niagara",
+			"AIModule", 
+			"NavigationSystem"
 		});
 	}
 }
