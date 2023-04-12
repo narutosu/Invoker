@@ -26,4 +26,7 @@ protected:
 	class UIVAbilitySystemComponent* AbilitySystemComponent;
 	UPROPERTY()
 	class UIVAttributeSet* AttributeSet;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	int32 GetCharacterLevel() const;
 };

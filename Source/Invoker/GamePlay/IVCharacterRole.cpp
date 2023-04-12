@@ -21,5 +21,7 @@ void AIVCharacterRole::PossessedBy(AController * NewController)
 
 		// Set the AttributeSetBase for convenience attribute functions
 		AttributeSetBase = PS->GetAttributeSet();
+
+		InitializeAttributes();
 	}
 }

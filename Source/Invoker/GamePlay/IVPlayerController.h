@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "InputMappingContext.h"
+#include "IVCharacterBase.h"
 #include "GameFramework/PlayerController.h"
 #include "IVPlayerController.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSeletedCharacterChanged, AIVCharacterBase*, Character);
 /**
  * 
  */
@@ -14,8 +17,12 @@ UCLASS()
 class INVOKER_API AIVPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	AIVPlayerController();
 	// To add mapping context
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
+
+	virtual void OnPossess(APawn* InPawn) override;
 	
 	//Input
 protected:
@@ -50,4 +57,21 @@ protected:
 	void OnInputMove();
 	void OnInputSkill(const FInputActionValue& value);
 	void OnInputStop(const FInputActionValue& value);
+
+	//UI
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI")
+	TSubclassOf<class UUserWidget> UIMainWidgetClass;
+
+	UPROPERTY(BlueprintReadWrite, Category = "UI")
+	class UUserWidget* UIMainWidget;
+	
+	void CreateHUD();
+private:
+	AIVCharacterBase* SelectedCharacter;
+public:
+	UPROPERTY(BlueprintAssignable, Category = "IV")
+	FOnSeletedCharacterChanged OnSelectedCharacterChanged;
+	
+	void SetSelectedCharacter(AIVCharacterBase* targe);
+	AIVCharacterBase* GetSelectedCharacter();
 };

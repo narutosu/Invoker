@@ -7,6 +7,20 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "NiagaraSystem.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Blueprint/UserWidget.h"
+
+AIVPlayerController::AIVPlayerController()
+:SelectedCharacter(nullptr)
+{
+	
+}
+
+void AIVPlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+	CreateHUD();
+}
+
 void AIVPlayerController::BeginPlay()
 {
 	// Call the base class  
@@ -64,6 +78,44 @@ void AIVPlayerController::OnInputMove()
 void AIVPlayerController::OnInputSkill(const FInputActionValue& value)
 {
 }
+
 void AIVPlayerController::OnInputStop(const FInputActionValue& value)
 {
+}
+
+void AIVPlayerController::CreateHUD()
+{
+	// Only create once
+	if (UIMainWidget)
+	{
+		return;
+	}
+
+	if (!UIMainWidgetClass)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing UIHUDWidgetClass. Please fill in on the Blueprint of the PlayerController."), *FString(__FUNCTION__));
+		return;
+	}
+
+	// Only create a HUD for local player
+	if (!IsLocalPlayerController())
+	{
+		return;
+	}
+
+	UIMainWidget = CreateWidget<UUserWidget>(this, UIMainWidgetClass);
+	UIMainWidget->AddToViewport();
+}
+
+void AIVPlayerController::SetSelectedCharacter(AIVCharacterBase* targe)
+{
+	if(SelectedCharacter==targe)
+		return;;
+	SelectedCharacter = targe;
+	OnSelectedCharacterChanged.Broadcast(targe);
+}
+
+AIVCharacterBase* AIVPlayerController::GetSelectedCharacter()
+{
+	return  SelectedCharacter;
 }

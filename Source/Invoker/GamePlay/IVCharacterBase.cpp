@@ -3,6 +3,8 @@
 
 #include "IVCharacterBase.h"
 
+#include "Invoker/GAS/Attribute/IVAttributeSet.h"
+
 
 // Sets default values
 AIVCharacterBase::AIVCharacterBase(const class FObjectInitializer& ObjectInitializer)
@@ -34,4 +36,139 @@ void AIVCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 UAbilitySystemComponent* AIVCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent.Get();
+}
+
+void AIVCharacterBase::InitializeAttributes()
+{
+	if (!AbilitySystemComponent.IsValid())
+	{
+		return;
+	}
+
+	if (!DefaultAttributes)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing DefaultAttributes for %s. Please fill in the character's Blueprint."), *FString(__FUNCTION__), *GetName());
+		return;
+	}
+
+	// Can run on Server and Client
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributes, GetCharacterLevel(), EffectContext);
+	if (NewHandle.IsValid())
+	{
+		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
+	}
+}
+
+int32 AIVCharacterBase::GetCharacterLevel() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetLevel());
+	}
+	return 0;
+}
+
+float AIVCharacterBase::GetStrength()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetStrength());
+	}
+	return 0;
+}
+
+float AIVCharacterBase::GetAgility()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetAgility());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetIntelligence()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetIntelligence());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetAttack()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetAttack());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetArmor()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetArmor());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetSpeed()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetSpeed());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetMaxHP()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetMaxHP());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetMaxMP()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetMaxMP());
+	}
+	return 0;
+}
+float AIVCharacterBase::GetCurHP()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetCurHP());
+	}
+	return 0;
+}
+
+float AIVCharacterBase::GetCurMP()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetCurMP());
+	}
+	return 0;
+}
+
+float AIVCharacterBase::GetHpRegenNum()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetHpRegenNum());
+	}
+	return 0;
+}
+
+
+float AIVCharacterBase::GetMpRegenNum()  const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetLevel());
+	}
+	return 0;
 }

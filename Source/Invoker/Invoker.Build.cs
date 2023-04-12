@@ -12,12 +12,13 @@ public class Invoker : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] {
 			"Slate",
 			"SlateCore",
+			"UMG",
 			"GameplayAbilities",
 			"GameplayTags",
 			"GameplayTasks",
 			"Niagara",
 			"AIModule", 
-			"NavigationSystem"
+			"NavigationSystem",
 		});
 	}
 }

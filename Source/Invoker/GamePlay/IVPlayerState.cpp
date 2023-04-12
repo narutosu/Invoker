@@ -19,3 +19,12 @@ UIVAttributeSet * AIVPlayerState::GetAttributeSet() const
 {
 	return AttributeSet;
 }
+
+int32 AIVPlayerState::GetCharacterLevel() const
+{
+	if (AttributeSet)
+	{
+		return static_cast<int32>(AttributeSet->GetLevel());
+	}
+	return 0;
+}

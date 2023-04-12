@@ -25,11 +25,56 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
+	TSoftObjectPtr<class UAssetAbilityBase> AssetAbility;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
+	TSubclassOf<class UGameplayEffect> DefaultAttributes;
 	//GAS
 public:
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 protected:
 	TWeakObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UIVAttributeSet> AttributeSetBase;
+public:
+	void InitializeAttributes();
+	
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	int32 GetCharacterLevel() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetStrength() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetAgility() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetIntelligence() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetAttack() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetArmor() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetSpeed() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetMaxHP() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetMaxMP() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetCurHP() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetCurMP() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetHpRegenNum() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	float GetMpRegenNum() const;
 };
