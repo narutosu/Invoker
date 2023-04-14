@@ -19,6 +19,7 @@ void AIVPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	CreateHUD();
+	SetSelectedCharacter(Cast<AIVCharacterBase>(InPawn));
 }
 
 void AIVPlayerController::BeginPlay()

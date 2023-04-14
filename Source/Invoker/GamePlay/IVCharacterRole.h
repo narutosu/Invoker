@@ -16,4 +16,5 @@ class INVOKER_API AIVCharacterRole : public AIVCharacterBase
 public:
 	// Only called on the Server. Calls before Server's AcknowledgePossession.
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void BeginPlay() override;
 };

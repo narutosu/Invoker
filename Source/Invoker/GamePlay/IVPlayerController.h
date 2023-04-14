@@ -71,7 +71,10 @@ private:
 public:
 	UPROPERTY(BlueprintAssignable, Category = "IV")
 	FOnSeletedCharacterChanged OnSelectedCharacterChanged;
-	
+
+	UFUNCTION(BlueprintCallable, Category = "IV")
 	void SetSelectedCharacter(AIVCharacterBase* targe);
+
+	UFUNCTION(BlueprintCallable, Category = "IV")
 	AIVCharacterBase* GetSelectedCharacter();
 };
