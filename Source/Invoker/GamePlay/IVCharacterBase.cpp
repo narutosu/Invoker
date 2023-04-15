@@ -45,7 +45,7 @@ void AIVCharacterBase::InitializeAttributes()
 		return;
 	}
 
-	if (!DefaultAttributes)
+	if (!DefaultAttributes||!DefaultDerivedAttributes)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s() Missing DefaultAttributes for %s. Please fill in the character's Blueprint."), *FString(__FUNCTION__), *GetName());
 		return;
@@ -59,6 +59,12 @@ void AIVCharacterBase::InitializeAttributes()
 	if (NewHandle.IsValid())
 	{
 		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
+	}
+	
+	FGameplayEffectSpecHandle NewHandle2 = AbilitySystemComponent->MakeOutgoingSpec(DefaultDerivedAttributes, GetCharacterLevel(), EffectContext);
+	if (NewHandle2.IsValid())
+	{
+		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle2.Data.Get(), AbilitySystemComponent.Get());
 	}
 }
 

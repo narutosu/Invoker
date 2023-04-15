@@ -30,6 +30,9 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributes;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
+	TSubclassOf<class UGameplayEffect> DefaultDerivedAttributes;
 	//GAS
 public:
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;

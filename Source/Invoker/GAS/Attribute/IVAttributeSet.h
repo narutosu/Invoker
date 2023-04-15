@@ -66,12 +66,12 @@ public:
 	ATTRIBUTE_ACCESSORS(UIVAttributeSet, BornMaxMP)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Base")
-	FGameplayAttributeData BornHpRegenRate;
-	ATTRIBUTE_ACCESSORS(UIVAttributeSet, BornHpRegenRate)
+	FGameplayAttributeData BornHpRegenNum;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, BornHpRegenNum)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Base")
-	FGameplayAttributeData BornManaRegenRate;
-	ATTRIBUTE_ACCESSORS(UIVAttributeSet, BornManaRegenRate)
+	FGameplayAttributeData BornMpRegenNum;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, BornMpRegenNum)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Base")
 	FGameplayAttributeData GrowStrength;
@@ -92,7 +92,53 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "state")
 	FGameplayAttributeData CurMP;
 	ATTRIBUTE_ACCESSORS(UIVAttributeSet, CurMP)
+
+	UPROPERTY(BlueprintReadOnly, Category = "state")
+	FGameplayAttributeData CurExp;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, CurExp)
+
+	//从装备或者物品之类的得到的属性
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherStrength;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherStrength)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherAgility;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherAgility)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherIntelligence;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherIntelligence)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherAttack;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherAttack)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherArmor;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherArmor)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherSpeed;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherSpeed)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherMaxHP;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherMaxHP)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherMaxMP;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherMaxMP)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherHpRegenNum;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherHpRegenNum)
+
+	UPROPERTY(BlueprintReadOnly, Category = "FromOther")
+	FGameplayAttributeData OtherMpRegenNum;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, OtherMpRegenNum)
 	
+	//推导属性 通过GE_HeroDerivedAttributes计算
 	UPROPERTY(BlueprintReadOnly, Category = "Derived")
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UIVAttributeSet, Strength)
@@ -124,22 +170,18 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Derived")
 	FGameplayAttributeData MaxMP;
 	ATTRIBUTE_ACCESSORS(UIVAttributeSet, MaxMP)
-
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Derived")
+	FGameplayAttributeData NeedExp;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, NeedExp)
+	
 	UPROPERTY(BlueprintReadOnly, Category = "Derived")
 	FGameplayAttributeData HpRegenRate;
 	ATTRIBUTE_ACCESSORS(UIVAttributeSet, HpRegenRate)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Derived")
-	FGameplayAttributeData ManaRegenRate;
-	ATTRIBUTE_ACCESSORS(UIVAttributeSet, ManaRegenRate)
-
-	UPROPERTY(BlueprintReadOnly, Category = "Meta")
-	FGameplayAttributeData Damage;
-	ATTRIBUTE_ACCESSORS(UIVAttributeSet, Damage)
-	
-	UPROPERTY(BlueprintReadOnly, Category = "Meta")
-	FGameplayAttributeData Healing;
-	ATTRIBUTE_ACCESSORS(UIVAttributeSet, Healing)
+	FGameplayAttributeData MpRegenRate;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, MpRegenRate)
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Meta")
 	FGameplayAttributeData HpRegenNum;
@@ -148,6 +190,13 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Meta")
 	FGameplayAttributeData MpRegenNum;
 	ATTRIBUTE_ACCESSORS(UIVAttributeSet, MpRegenNum)
-
 	
+	//临时属性
+	UPROPERTY(BlueprintReadOnly, Category = "Meta")
+	FGameplayAttributeData Damage;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, Damage)
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Meta")
+	FGameplayAttributeData Healing;
+	ATTRIBUTE_ACCESSORS(UIVAttributeSet, Healing)
 };

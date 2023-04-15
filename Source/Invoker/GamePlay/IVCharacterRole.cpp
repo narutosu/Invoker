@@ -21,6 +21,9 @@ void AIVCharacterRole::PossessedBy(AController * NewController)
 
 		// Set the AttributeSetBase for convenience attribute functions
 		AttributeSetBase = PS->GetAttributeSet();
+
+		//设置主属性
+		AbilitySystemComponent->SetTagMapCount(MainAttrTag,1);
 	}
 }
 

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "IVCharacterBase.h"
 #include "IVCharacterRole.generated.h"
 
@@ -17,4 +18,8 @@ public:
 	// Only called on the Server. Calls before Server's AcknowledgePossession.
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void BeginPlay() override;
+
+	//主属性tag MainAttr.Strength
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="GAS")
+	FGameplayTag MainAttrTag;
 };
