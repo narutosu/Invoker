@@ -2,7 +2,7 @@
 
 
 #include "IVCharacterBase.h"
-
+#include "Invoker/GAS/IVAbilitySystemComponent.h"
 #include "Invoker/GAS/Attribute/IVAttributeSet.h"
 
 
@@ -66,6 +66,28 @@ void AIVCharacterBase::InitializeAttributes()
 	{
 		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle2.Data.Get(), AbilitySystemComponent.Get());
 	}
+}
+
+void AIVCharacterBase::AddStartupEffects()
+{
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->bStartupEffectsApplied)
+	{
+		return;
+	}
+
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	for (TSubclassOf<UGameplayEffect> GameplayEffect : StartupEffects)
+	{
+		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, GetCharacterLevel(), EffectContext);
+		if (NewHandle.IsValid())
+		{
+			FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
+		}
+	}
+
+	AbilitySystemComponent->bStartupEffectsApplied = true;
 }
 
 int32 AIVCharacterBase::GetCharacterLevel() const

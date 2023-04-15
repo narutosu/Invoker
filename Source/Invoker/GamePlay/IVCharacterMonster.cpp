@@ -24,4 +24,5 @@ void AIVCharacterMonster::BeginPlay()
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	}
 	InitializeAttributes();
+	AddStartupEffects();
 }

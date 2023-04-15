@@ -33,14 +33,18 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultDerivedAttributes;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
+	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
 	//GAS
 public:
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 protected:
-	TWeakObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
+	TWeakObjectPtr<class UIVAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UIVAttributeSet> AttributeSetBase;
 public:
-	void InitializeAttributes();
+	virtual void InitializeAttributes();
+	virtual void AddStartupEffects();
 	
 	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	int32 GetCharacterLevel() const;
