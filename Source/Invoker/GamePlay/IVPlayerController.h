@@ -48,6 +48,9 @@ protected:
 	TObjectPtr<UInputAction> IA_Skill;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="EnhancedInput|Action", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<UInputAction> IA_Stop;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="EnhancedInput|Action", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UInputAction> IA_Comfirm;
+
 
 	void OnInputAttackSelect(const FInputActionValue& value);
 	void OnInputCameraMove(const FInputActionValue& value);
@@ -57,6 +60,7 @@ protected:
 	void OnInputMove();
 	void OnInputSkill(const FInputActionValue& value);
 	void OnInputStop(const FInputActionValue& value);
+	void OnInputComfirm(const FInputActionValue& value);
 
 	//UI
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "UI")
@@ -77,4 +81,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "IV")
 	AIVCharacterBase* GetSelectedCharacter();
+
+	void InterruptAbility();
 };

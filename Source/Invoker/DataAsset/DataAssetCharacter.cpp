@@ -1,5 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AssetAbility_Kael.h"
+#include "DataAssetCharacter.h"
 
+UDataAssetCharacter::UDataAssetCharacter()
+{
+	
+}

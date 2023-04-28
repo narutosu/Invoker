@@ -3,3 +3,6 @@
 
 #include "IVGameplayAbility.h"
 
+UIVGameplayAbility::UIVGameplayAbility()
+{
+}

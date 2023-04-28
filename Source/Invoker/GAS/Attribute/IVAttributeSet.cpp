@@ -18,12 +18,12 @@ void UIVAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 	Super::PostGameplayEffectExecute(Data);
 	if (Data.EvaluatedData.Attribute == GetCurHPAttribute())
 	{
-		SetCurHP(FMath::Clamp(GetCurHP(), 0.0f, GetMaxHP()));
+		//SetCurHP(FMath::Clamp(GetCurHP(), 0.0f, GetMaxHP()));
 	}
 	else if (Data.EvaluatedData.Attribute == GetCurMPAttribute())
 	{
 		// Handle mana changes.
-		SetCurMP(FMath::Clamp(GetCurMP(), 0.0f, GetMaxMP()));
+		//SetCurMP(FMath::Clamp(GetCurMP(), 0.0f, GetMaxMP()));
 	} // Mana
 }
 

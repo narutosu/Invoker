@@ -13,5 +13,10 @@ UCLASS()
 class INVOKER_API UIVGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-	
+public:
+	UIVGameplayAbility();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	float CD;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
+	bool isPassive;
 };

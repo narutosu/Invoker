@@ -4,6 +4,7 @@
 #include "IVCharacterBase.h"
 #include "Invoker/GAS/IVAbilitySystemComponent.h"
 #include "Invoker/GAS/Attribute/IVAttributeSet.h"
+#include "Invoker/GAS/Ability/IVGameplayAbility.h"
 
 
 // Sets default values
@@ -17,6 +18,22 @@ AIVCharacterBase::AIVCharacterBase(const class FObjectInitializer& ObjectInitial
 void AIVCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+	SkillNeedNewDeltaYaw.AddDynamic(this,&AIVCharacterBase::OnSkillNeedNewDeltaYaw);
+}
+
+void AIVCharacterBase::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	for(auto item:SkillItemArr)
+	{
+		UIVAssetManager::GetAsset(item,true);
+		item.LoadSynchronous();
+	}
+}
+
+void AIVCharacterBase::UnPossessed()
+{
+	Super::UnPossessed();
 	
 }
 
@@ -24,12 +41,45 @@ void AIVCharacterBase::BeginPlay()
 void AIVCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	UpdateOrientid(DeltaTime);
 }
 
 // Called to bind functionality to input
 void AIVCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AIVCharacterBase::UpdateOrientid(float DeltaTime)
+{
+	float factor = SkillNeedYawDelta>=0.f?1:-1;
+	if(factor*SkillNeedYawDelta>=1.f)//abs
+	{
+		float NeedYaw = factor*180.f*DeltaTime/YawTime;
+		if(factor*NeedYaw>factor*SkillNeedYawDelta)
+		{
+			NeedYaw = SkillNeedYawDelta;
+		}
+		AddActorWorldRotation(FRotator(0,NeedYaw,0));
+		LastFrameYaw = NeedYaw;
+		SkillNeedYawDelta -=NeedYaw;
+		if(isWaitSkill&&factor*SkillNeedYawDelta<=10.f)//小于10度可释放朝向技能
+		{
+			isWaitSkill = false;
+			CanSkillDelegate.Broadcast();
+		}
+	}
+	else if(isWaitSkill)
+	{
+		isWaitSkill = false;
+		CanSkillDelegate.Broadcast();
+	}
+}
+
+void AIVCharacterBase::OnSkillNeedNewDeltaYaw(float DeltaYaw,bool isWait)
+{
+	SkillNeedYawDelta = DeltaYaw;
+	isWaitSkill = isWait;
 }
 
 //GAS
@@ -88,6 +138,35 @@ void AIVCharacterBase::AddStartupEffects()
 	}
 
 	AbilitySystemComponent->bStartupEffectsApplied = true;
+}
+
+void AIVCharacterBase::AddCharacterAbilities()
+{
+	// Grant abilities, but only on the server	
+	//if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->bCharacterAbilitiesGiven)
+	//{
+	//	return;
+	//}
+	AbilitiesHandles.Empty();
+	for (TSoftObjectPtr<UIVSkillItem>& StartupAbility : SkillItemArr)
+	{
+		auto item = StartupAbility.LoadSynchronous();
+		auto handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(item->GrantedAbility, 1, INDEX_NONE, this));
+		AbilitiesHandles.Add(handle);
+	}
+
+	AbilitySystemComponent->bCharacterAbilitiesGiven = true;
+}
+
+void AIVCharacterBase::TryActivateAbilityByIndex(int32 index)
+{
+	if(AbilitiesHandles.Num()<=index)
+	{
+		checkf(false,TEXT("CharacterAbilities range out"));
+		return;
+	}
+	FGameplayAbilitySpecHandle targetAbility = AbilitiesHandles[index];
+	AbilitySystemComponent->TryActivateAbility(targetAbility);	
 }
 
 int32 AIVCharacterBase::GetCharacterLevel() const

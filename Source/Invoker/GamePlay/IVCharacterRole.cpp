@@ -32,4 +32,5 @@ void AIVCharacterRole::BeginPlay()
 	Super::BeginPlay();
 	InitializeAttributes();
 	AddStartupEffects();
+	AddCharacterAbilities();
 }
