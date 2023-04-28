@@ -37,7 +37,7 @@ public:
 	FIVCharacterBase_DeltaYawCanSkill CanSkillDelegate;
 	float SkillNeedYawDelta = 0.f;
 	//旋转180度需要的时间
-	float YawTime = 1.5f;
+	float YawTime = 0.4f;
 	float LastFrameYaw = 0.f;//上一帧人物Yaw的值
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Native")
 	bool isWaitSkill = false;
