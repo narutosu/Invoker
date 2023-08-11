@@ -43,6 +43,8 @@ public:
 
 	// Logs all assets currently loaded and tracked by the asset manager.
 	static void DumpLoadedAssets();
+
+	virtual void StartInitialLoading() override;
 protected:
 	static UObject* SynchronousLoadAsset(const FSoftObjectPath& AssetPath);
 	static bool ShouldLogAssetLoads();

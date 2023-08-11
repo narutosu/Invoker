@@ -29,7 +29,7 @@ public:
 	float AbilityCD;//暂时无用
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
-	bool IsPassive;
+	bool IsPassive;//暂时无用
 
 	/** Overridden to use saved type */
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override;

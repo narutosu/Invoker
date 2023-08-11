@@ -4,6 +4,7 @@
 #include "Stats/StatsMisc.h"
 #include "Engine/Engine.h"
 #include "Invoker/IVLogChannels.h"
+#include "AbilitySystemGlobals.h"
 
 
 const FPrimaryAssetType	UIVAssetManager::SkillItem = TEXT("SkillItem");
@@ -88,3 +89,8 @@ void UIVAssetManager::UpdateInitialGameContentLoadPercent(float GameContentPerce
 	// Could route this to the early startup loading screen
 }
 
+void UIVAssetManager::StartInitialLoading() 
+{
+	Super::StartInitialLoading();
+	UAbilitySystemGlobals::Get().InitGlobalData();
+}

@@ -15,8 +15,24 @@ class INVOKER_API UIVGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 public:
 	UIVGameplayAbility();
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
-	float CD;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Item)
-	bool isPassive;
+
+	//cd
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Cooldown)
+	FScalableFloat CooldownDuration;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Cooldown)
+	FGameplayTagContainer CooldownTags;
+	UPROPERTY()
+	FGameplayTagContainer TempCooldownTags;
+
+	//cost
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = Cost)
+	FScalableFloat Cost;
+
+	//当技能被赋予时，是否马上生效
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = trait)
+	bool ActivateAbilityOnGranted = false;
+
+	virtual const FGameplayTagContainer* GetCooldownTags() const override;
+	virtual void ApplyCooldown(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const;
+	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 };

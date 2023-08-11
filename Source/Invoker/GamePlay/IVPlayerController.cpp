@@ -4,6 +4,7 @@
 #include "IVPlayerController.h"
 
 #include "AbilitySystemComponent.h"
+#include "CampInterface.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
@@ -65,14 +66,34 @@ void AIVPlayerController::OnInputHeroSelect(const FInputActionValue& value)
 }
 void AIVPlayerController::OnInputLeftClick(const FInputActionValue& value)
 {
-	
+	FHitResult Hit;
+	TArray<TEnumAsByte<EObjectTypeQuery> > objTypes;        
+	//objTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));//地板 Floor
+	objTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_GameTraceChannel4));//
+	bool bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel4,true,Hit);
+	//bool bHitSuccessful = GetHitResultUnderCursorForObjects(objTypes,true,Hit);
+	if(bHitSuccessful)
+	{
+		AActor* HitActor = Hit.HitObjectHandle.GetManagingActor();
+		AIVCharacterBase* HitCharacter = Cast<AIVCharacterBase>(HitActor);
+		if(HitCharacter)//点击到了阵营物体
+		{
+			//bool IsMatch = Character->CampTag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Camp.Enemy")));
+			//if(IsMatch)//上前并攻击
+			UAIBlueprintHelperLibrary::SimpleMoveToActor(this, Cast<AActor>(HitCharacter));
+		}
+		else if(HitActor)//地板
+		{
+			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, Hit.Location);
+		}
+	}
 }
 
 void AIVPlayerController::OnInputMove()
 {
 	StopMovement();
 	FHitResult Hit;
-	bool bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
+	bool bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_GameTraceChannel4, true, Hit);
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, Hit.Location);
 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, FXCursor, Hit.Location, FRotator::ZeroRotator, FVector(1.f, 1.f, 1.f), true, true, ENCPoolMethod::None, true);
 

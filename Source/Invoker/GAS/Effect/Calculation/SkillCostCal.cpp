@@ -1,13 +1,13 @@
-#include "SkillCDCal.h"
+#include "SkillCostCal.h"
 
 #include "Invoker/GamePlay/IVCharacterBase.h"
 #include "Invoker/GAS/Attribute/IVAttributeSet.h"
 
-USkillCDCal::USkillCDCal()
+USkillCostCal::USkillCostCal()
 {
 }
 
-float USkillCDCal::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
+float USkillCostCal::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 	const UIVGameplayAbility* Ability = Cast<UIVGameplayAbility>(Spec.GetContext().GetAbilityInstance_NotReplicated());
 
@@ -16,5 +16,5 @@ float USkillCDCal::CalculateBaseMagnitude_Implementation(const FGameplayEffectSp
 		return 0.0f;
 	}
 
-	return Ability->CooldownDuration.GetValueAtLevel(Ability->GetAbilityLevel());
+	return Ability->Cost.GetValueAtLevel(Ability->GetAbilityLevel());
 }

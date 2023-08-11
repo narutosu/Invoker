@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "CampInterface.h"
 #include "GameFramework/Character.h"
 #include "Invoker/GAS/Asset/Ability/IVSkillItem.h"
 #include "IVCharacterBase.generated.h"
@@ -64,6 +65,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
 
+	//所属的阵营
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Camp)
+	FGameplayTag CampTag;
+	
 	//UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASDocumentation|Abilities")
 	TArray<FGameplayAbilitySpecHandle> AbilitiesHandles;
 	//GAS

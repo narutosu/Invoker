@@ -13,6 +13,7 @@ AIVCharacterMonster::AIVCharacterMonster(const FObjectInitializer& ObjectInitial
 
 	HardRefAttributeSetBase = CreateDefaultSubobject<UIVAttributeSet>(TEXT("AttributeSetBase"));
 	AttributeSetBase = HardRefAttributeSetBase;
+	
 }
 
 void AIVCharacterMonster::BeginPlay()
